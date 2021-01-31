@@ -18,10 +18,14 @@ public class Person : MonoBehaviour {
         StartCoroutine(WaitRoutine());
     }
 
-
     IEnumerator WaitRoutine() {
         yield return new WaitForSeconds(Random.Range(2f, 5f));
-        WalkAcrossRoad();
+        if (_crossing.HasCars()) {
+            Debug.Log("Crossing occupied, try again soon");
+            StartCoroutine(WaitRoutine());
+        } else {
+            WalkAcrossRoad();
+        }
     }
 
     public void WalkAcrossRoad() {

@@ -61,7 +61,12 @@ public class Car : MonoBehaviour {
 
     IEnumerator TryMoveRoutine() {
         yield return new WaitForSeconds(0.5f);
-        StartCar();
+
+        if (!ObstacleExists()) {
+            StartCar();
+        } else {
+            StartCoroutine(TryMoveRoutine());
+        }
     }
 
     public void StartCar() {
@@ -69,7 +74,7 @@ public class Car : MonoBehaviour {
         _cart.m_Speed = _cartSpeed;
         _cart.enabled = true;
     }
-    
+
     void Update() {
         if (!_moving) return;
 
@@ -98,7 +103,7 @@ public class Car : MonoBehaviour {
 
             // Look towards movement direction
             Vector3 targetDirection = targetPos - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, step * 3, 0.0f);
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(newDirection);
 
             // Check if the position are approximately equal.
@@ -142,20 +147,27 @@ public class Car : MonoBehaviour {
 
     bool ObstacleExists() {
         Collider[] hitColliders = Physics.OverlapSphere(_collisionChecker.position, CautionSize);
+        bool colFound = false;
         foreach (var col in hitColliders) {
             switch (col.tag) {
                 case "Car":
                     Car otherCar = col.GetComponent<Car>();
-                    return !otherCar.Equals(this); // Make sure its not this car
+                    if (otherCar != this && otherCar._currentLane == _currentLane) {
+                        colFound = true;
+                    }
+                    break;
                 case "Obstacle":
                     Crossing crossing = col.GetComponentInChildren<Crossing>();
                     if (crossing != null) {
-                        return crossing.inUse;
+                        if (crossing.inUse) {
+                            colFound = true;
+                        }
                     }
                     break;
             }
         }
-        return false;
+
+        return colFound;
     }
 
     void OnDrawGizmosSelected() {

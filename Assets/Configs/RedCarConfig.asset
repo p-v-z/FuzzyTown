@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RedCarConfig
   m_EditorClassIdentifier: 
   carPrefab: {fileID: 100000, guid: eb85967c5c50a1e47a6c0bd1bc4125b8, type: 3}
-  carSpeed: 3
+  carSpeed: 2.5
