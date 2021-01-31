@@ -602,7 +602,7 @@ GameObject:
   - component: {fileID: 135166776}
   - component: {fileID: 135166775}
   - component: {fileID: 135166774}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2539,17 +2539,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0c86e3b71038ebc4db3ad0766b7fac03, type: 3}
   m_PrefabInstance: {fileID: 366051594}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &867616599 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1789498594552813160, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
-  m_PrefabInstance: {fileID: 12388914}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11c292c36e4a15c49b2f41903beb7837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &867616600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1789498594552813163, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
@@ -5048,6 +5037,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1145811231}
     - target: {fileID: 7916675730677985475, guid: a3753e43519130c4eb77600c6a0fbcd1, type: 3}
+      propertyPath: IntersectionOffset
+      value: 0.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7916675730677985475, guid: a3753e43519130c4eb77600c6a0fbcd1, type: 3}
       propertyPath: LaneEntrances.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -5608,17 +5601,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1789498594552813163, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
   m_PrefabInstance: {fileID: 84567743}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2005529756 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1789498594552813160, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
-  m_PrefabInstance: {fileID: 84567743}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11c292c36e4a15c49b2f41903beb7837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2005529757 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1789498594552813162, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
@@ -5708,17 +5690,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1789498594552813163, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
   m_PrefabInstance: {fileID: 175506768}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2058208155 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1789498594552813160, guid: 356950884e7cf7c4ca8970697678954c, type: 3}
-  m_PrefabInstance: {fileID: 175506768}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11c292c36e4a15c49b2f41903beb7837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2060845948
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5942,26 +5913,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1411548293231831703, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
-      propertyPath: Roads.Array.data[0]
-      value: 
-      objectReference: {fileID: 2005529756}
-    - target: {fileID: 1411548293231831703, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
-      propertyPath: Roads.Array.data[1]
-      value: 
-      objectReference: {fileID: 2058208155}
-    - target: {fileID: 1411548293231831703, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
-      propertyPath: Roads.Array.data[2]
-      value: 
-      objectReference: {fileID: 867616599}
-    - target: {fileID: 1411548293231831703, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
-      propertyPath: Roads.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1411548293231831703, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
-      propertyPath: Roads.Array.data[4]
-      value: 
-      objectReference: {fileID: 1145811231}
     - target: {fileID: 5233716498929836742, guid: 6262f28a011ea5f48bf8b8032196406d, type: 3}
       propertyPath: m_RootOrder
       value: 2

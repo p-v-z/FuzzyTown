@@ -2,14 +2,16 @@ using System.Collections;
 using UnityEngine;
 
 public class Person : MonoBehaviour {
-    public Animator anim;
-    public Vector3 currentTarget;
-    public bool onA;
+    public static bool Log = false;
 
+    [SerializeField] Animator _anim;
+
+    bool _onA;
     bool _walking = false;
-    Crossing _crossing;
     Vector3 _posA;
     Vector3 _posB;
+    Vector3 _currentTarget;
+    Crossing _crossing;
 
     void Awake() {
         _crossing = GetComponentInParent<Crossing>();
@@ -21,7 +23,7 @@ public class Person : MonoBehaviour {
     IEnumerator WaitRoutine() {
         yield return new WaitForSeconds(Random.Range(2f, 5f));
         if (_crossing.HasCars()) {
-            Debug.Log("Crossing occupied, try again soon");
+            if (Log) Debug.Log("Crossing occupied, try again soon");
             StartCoroutine(WaitRoutine());
         } else {
             WalkAcrossRoad();
@@ -29,12 +31,12 @@ public class Person : MonoBehaviour {
     }
 
     public void WalkAcrossRoad() {
-        Debug.Log("Walk across road");
-        onA = !onA;
-        currentTarget = onA ? _posB : _posA;
+        if (Log) Debug.Log("Walk across road");
+        _onA = !_onA;
+        _currentTarget = _onA ? _posB : _posA;
         _crossing.inUse = true;
         _walking = true;
-        anim.SetFloat("Speed_f", 0.5f);
+        _anim.SetFloat("Speed_f", 0.5f);
     }
 
     const float Speed = 0.5f;
@@ -42,12 +44,12 @@ public class Person : MonoBehaviour {
         if (_walking) {
             // Move our position a step closer to the target.
             float step = Speed * Time.deltaTime; // calculate distance to move
-            transform.position = Vector3.MoveTowards(transform.position, currentTarget, step);
+            transform.position = Vector3.MoveTowards(transform.position, _currentTarget, step);
 
-            if (transform.position == currentTarget) {
+            if (transform.position == _currentTarget) {
                 _walking = false;
                 _crossing.inUse = false;
-                anim.SetFloat("Speed_f", 0.0f);
+                _anim.SetFloat("Speed_f", 0.0f);
                 StartCoroutine(WaitRoutine());
             }
         }

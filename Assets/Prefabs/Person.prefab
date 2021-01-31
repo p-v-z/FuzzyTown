@@ -76,9 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687f3677dd202f742a9ede95d3c78074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 55023633192411419}
-  currentTarget: {x: 0, y: 0, z: 0}
-  onA: 0
+  _anim: {fileID: 55023633192411419}
 --- !u!65 &6751787926968693269
 BoxCollider:
   m_ObjectHideFlags: 0

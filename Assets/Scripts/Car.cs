@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 public class Car : MonoBehaviour {
+    public static bool Log = false;
+
     [Header("Car Settings")]
     public bool MovingForward = true;
     public float Speed = 2f;
@@ -29,7 +31,9 @@ public class Car : MonoBehaviour {
     bool _hitCenter = false;
     bool _shouldTurnOff = false;
     float _turnOffOffset;
+
     IntersectionStraight _intersectionStraight;
+    float _intersectionOffset;
 
     void Awake() {
         if (_config) {
@@ -85,16 +89,13 @@ public class Car : MonoBehaviour {
         }
 
         if (_switchingLanes) {
-            Vector3 targetPos;
-            if (_offset > 0f) { // turning into the middle of a lane
+            // Set target
+            Vector3 targetPos; 
+            if (_intersectionOffset > 0f) { // turning into the middle of a lane
                 var straight = _intersectionFrom.GetComponent<IntersectionStraight>();
-                targetPos = straight.MainRoad.GetPointInPath(straight.offset);
+                targetPos = straight.MainRoad.GetPointInPath(straight.IntersectionOffset);
             } else {
-                if (_hitCenter) {
-                    targetPos = _targetLane.GetStartPoint();
-                } else {
-                    targetPos = _intersectionFrom.transform.position;
-                }
+                targetPos = _hitCenter ? _targetLane.GetStartPoint() : _intersectionFrom.transform.position;
             }
 
             // Move our position a step closer to the target.
@@ -109,7 +110,7 @@ public class Car : MonoBehaviour {
             // Check if the position are approximately equal.
             if (Vector3.Distance(transform.position, targetPos) < 0.001f) {
                 if (_hitCenter) {
-                    PutCarOnLaneFromIntersection(_targetLane, _offset);
+                    PutCarOnLaneFromIntersection(_targetLane, _intersectionOffset);
                 } else {
                     _hitCenter = true;
                 }
@@ -137,12 +138,11 @@ public class Car : MonoBehaviour {
 
     void PlaceCarInQueue() {
         if (_currentLane.IntersectionAtEnd) {
-            Debug.Log("Put car on intersection");
+            if (Log) Debug.Log("Put car on intersection");
             _currentLane.IntersectionAtEnd.QueueCar(this);
             _cart.enabled = false;
             _cart.m_Path = null;
-        } else Debug.Log("No intersection - stop");
-
+        } else if (Log) Debug.Log("No intersection - stop");
     }
 
     bool ObstacleExists() {
@@ -166,23 +166,16 @@ public class Car : MonoBehaviour {
                     break;
             }
         }
-
         return colFound;
     }
 
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(_collisionChecker.position, CautionSize);
-    }
-
-    float _offset;
     public void MoveToLaneOffset(Lane target, Intersection from, float offset) {
-        _offset = offset;
+        _intersectionOffset = offset;
         MoveToLane(target, from);
     }
 
     public void MoveToLane(Lane target, Intersection from) {
-        Debug.Log("Start moving to new lane");
+        if (Log) Debug.Log("Start moving to new lane");
         _targetLane = target;
         _switchingLanes = true;
         _intersectionFrom = from;
@@ -212,7 +205,7 @@ public class Car : MonoBehaviour {
     public Lane PutCarOnLane(Lane target, float offset) {
         var lane = PutCarOnLane(target);
         _cart.m_Position = _pathLength * offset;
-        _offset = 0f;
+        _intersectionOffset = 0f;
         return lane;
     }
 
@@ -239,11 +232,16 @@ public class Car : MonoBehaviour {
     }
 
     void CheckForOffturn() {
-        if (CurrentRoad.hasOffturn && Random.Range(0, 10) >= 7) {
+        if (CurrentRoad.HasOffturn && Random.Range(0, 10) >= 7) {
             _intersectionStraight = CurrentRoad.OffTurns.First();
-            _turnOffOffset = _intersectionStraight.offset * CurrentRoad.Path.PathLength;
+            _turnOffOffset = _intersectionStraight.IntersectionOffset * CurrentRoad.Path.PathLength;
             _shouldTurnOff = true;
-            Debug.Log($"Car will turn off at {_turnOffOffset}");
+            if (Log) Debug.Log($"Car will turn off at {_turnOffOffset}");
         }
+    }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_collisionChecker.position, CautionSize);
     }
 }

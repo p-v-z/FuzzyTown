@@ -65,6 +65,5 @@ public class IntersectionInspector : Editor {
                 Handles.DrawLine(intersection.transform.position, lane.GetStartPoint(), 10f);
             });
         }
-
     }
 }

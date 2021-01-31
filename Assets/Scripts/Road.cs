@@ -8,8 +8,7 @@ public class Road : MonoBehaviour {
     public Lane LaneA;
     public Lane LaneB;
 
-    public List<Intersection> Intersections;
-
+    public bool HasOffturn { get; private set; }
     public List<IntersectionStraight> OffTurns;
 
     void Awake() {
@@ -20,25 +19,16 @@ public class Road : MonoBehaviour {
         FindConnectedIntersections();
     }
     
-    public bool hasOffturn { get; private set; }
     void FindConnectedIntersections() {
-        //RoadCollection.Instance.Roads.ForEach(road => {
-            // check for staragit raod
-        //    GetComponent<IntersectionStraight>()
-        //});
         var intersections = RoadCollection.Instance.Intersections;
         if (intersections.Count == 0) return;
 
         intersections.ForEach(intersection => {
             IntersectionStraight straight = intersection.GetComponent<IntersectionStraight>();
-            if (straight != null) {
-                if (straight.MainRoad == this) {
-                    hasOffturn = true;
-                    OffTurns.Add(straight);
-                    Debug.Log("Road has offtur");
-                    //return;
-                }
-            }
+            if (straight == null) return;
+            if (straight.MainRoad != this) return;
+            HasOffturn = true;
+            OffTurns.Add(straight);
         });
     }
 
