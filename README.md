@@ -1,4 +1,5 @@
 # Fuzzy Town 🚦🚗
+This is a simple traffic simulation created in Unity. It features cars driving on roads, and pedestrian crossings where the cars will yield.
 
 ## Environment
 Unity **2020.2.2f1**
